@@ -18,7 +18,7 @@ A `.env` nincs verziókezelve (a jelszó nem kerül fel a GitHubra). A szerver c
 - **Ügyfelek:** a teljes lista keresővel, státusz- és kategóriaszűrővel, oszlop szerinti rendezéssel.
 - **Utókövetés:** a lejárt, mai és heti teendők, gyors „Kész” és „+3 nap” gombokkal.
 - **Ügyfél adatlap (oldalpanel):**
-  - linkek: demo oldal, Gmail-piszkozatok, Google Maps, telefon, email
+  - linkek: demo oldal, céges webmail (Piszkozatok), Google Maps, telefon, email
   - szerkeszthető adatok
   - utókövetés ütemezése (holnap / +3 nap / +1 hét / +2 hét vagy pontos időpont)
   - előzmények: jegyzet, hívás, email, találkozó

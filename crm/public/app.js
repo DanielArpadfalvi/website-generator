@@ -251,7 +251,7 @@ async function openLead(id) {
     </div>
     <div class="d-links">
       ${o?.demo_url ? `<a class="btn small" target="_blank" href="${esc(o.demo_url)}">🌐 Demo oldal</a>` : ''}
-      ${o?.gmail_draft_id ? `<a class="btn small" target="_blank" href="https://mail.google.com/mail/u/0/#drafts">✉️ Gmail piszkozatok</a>` : ''}
+      ${o?.gmail_draft_id ? `<a class="btn small" target="_blank" href="https://we029.tarhely.com:2443/login/webmail/">✉️ Céges webmail (Piszkozatok)</a>` : ''}
       ${l.google_maps_url ? `<a class="btn small" target="_blank" href="${esc(l.google_maps_url)}">📍 Google Maps</a>` : ''}
       ${l.phone ? `<a class="btn small" href="tel:${esc(l.phone.replace(/\s/g, ''))}">📞 ${esc(l.phone)}</a>` : ''}
       ${l.email ? `<a class="btn small" href="mailto:${esc(l.email)}">📧 ${esc(l.email)}</a>` : ''}

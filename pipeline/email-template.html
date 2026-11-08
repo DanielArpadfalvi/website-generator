@@ -6,10 +6,9 @@
     {{DICSERET}}        2–3 mondat, a valós Google-értékelések visszatérő témái SAJÁT SZAVAKKAL (nem szó szerinti idézet), értékelésszám + átlag
     {{JELENLEGI_JELENLET}}  pl. "egy foglalási profilt és a Google-adatlapot" / "csak a Facebook-oldalát"
     {{DEMO_URL}}
-  Kép: a demo főoldaláról készült kép BEÁGYAZOTT mellékletként megy (cid:att0), mert a Gmail-csatoló a külső
-  (http) képeket kiszedi a levélből. create_draft attachments: [{content: "sha256:<hash>:<abs path>/preview-email.jpg",
-  filename: "demo-elonezet.jpg", mimeType: "image/jpeg", inline: true}] – ehhez a "to" mezőben kell címzett.
-  FONTOS: a "background:" rövidített CSS-t a csatoló törli; csak "background-color" + táblázat bgcolor működik.
+  Kép: a demo első képernyője BEÁGYAZVA megy (src="cid:demo-preview"); a leadgen-imap-draft függvény az image_url-ről
+  (= {{DEMO_URL}}preview.jpg) tölti le és csatolja. A képre kattintva a teljes oldalas kép nyílik meg: {{DEMO_URL}}preview-full.jpg
+  Formázás: háttérszín csak "background-color" + táblázat bgcolor (levelezőprogram-kompatibilis).
     {{DEMO_EXTRA}}      1 mondat a demóról, ami az adott ügyfélre szabott (pl. foglalási linkre visz, árlistát mutat)
     {{DOMAIN_1}} {{DOMAIN_2}} {{DOMAIN_3}}  validált, szabad domainek
     {{BOVITES_PELDA}}   szakmához illő bővítés, pl. "otthoni ápolási termékekhez" / "online árajánlatkéréshez"
@@ -20,9 +19,9 @@
 <p>{{MEGSZOLITAS}}</p>
 <p>Árpádfalvi Dániel vagyok, a szegedi Redpunk Studio Kft. ügyvezetője; kis vállalkozásoknak készítünk weboldalakat. {{KERESES_KOR}} találtam rá a vállalkozására, és őszintén megfogott, amit láttam: {{DICSERET}}</p>
 <p>Feltűnt viszont, hogy saját weboldala még nincs: aki rákeres, {{JELENLEGI_JELENLET}} találja. Úgy gondoltuk, a munkája megérdemelne egy igényes, saját bemutatkozó oldalt, ezért összeraktunk egy demót, hogy ne csak beszéljünk róla:</p>
-<p style="margin:22px 0 12px"><a href="{{DEMO_URL}}" style="text-decoration:none"><img src="cid:att0" alt="A demo weboldal főoldala" width="560" style="display:block;width:100%;max-width:560px;height:auto;border:1px solid #e6dcd3;border-radius:10px"></a></p>
+<p style="margin:22px 0 12px"><a href="{{DEMO_URL}}preview-full.jpg" style="text-decoration:none"><img src="cid:demo-preview" alt="A demo weboldal főoldala – kattintson a teljes oldal megtekintéséhez" width="560" style="display:block;width:100%;max-width:560px;height:auto;border:1px solid #e6dcd3;border-radius:10px"></a></p>
 <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 6px"><tr><td bgcolor="#2c2420" style="background-color:#2c2420;border-radius:999px;padding:12px 24px"><a href="{{DEMO_URL}}" style="color:#ffffff;text-decoration:none;font-weight:bold;font-family:Arial,Helvetica,sans-serif;font-size:15px">Demo oldal megtekintése &rarr;</a></td></tr></table>
-<p style="margin:0 0 22px;font-size:13px;color:#6f625a">{{DEMO_URL}}</p>
+<p style="margin:0 0 22px;font-size:13px;color:#6f625a">(A képre kattintva a teljes oldalt egyben is megnézheti.) {{DEMO_URL}}</p>
 <p>Telefonon is jól mutat. {{DEMO_EXTRA}} A szövegek és a fotók természetesen teljesen az Ön ízlésére szabhatók.</p>
 <p><b>Ha tetszik, egyszeri 50 000 Ft-ért élesítjük</b>, saját domainnel. Ellenőriztük, ezek a címek most szabadok:</p>
 <ul>
