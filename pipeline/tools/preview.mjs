@@ -1,13 +1,13 @@
 // Email-előnézeti kép készítése egy demo oldal első képernyőjéről.
 // Használat:
-//   cd pipeline/tools && npm install && node preview.mjs ../../<slug>/index.html ../../<slug>/preview.jpg
+//   cd pipeline/tools && npm install && node preview.mjs ../../<slug>/index.html ../../<slug>/preview.jpg ../../<slug>/preview-full.jpg
 // A Google Fonts helyett a @fontsource csomagok betűtípusait tölti be (a felhős környezet nem éri el a fonts.googleapis.com-ot).
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const [, , input, output = 'preview.jpg'] = process.argv;
+const [, , input, output = 'preview.jpg', fullOutput] = process.argv;
 if (!input) { console.error('Használat: node preview.mjs <index.html> [kimenet.jpg]'); process.exit(1); }
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fsrc = path.join(here, 'node_modules', '@fontsource');
@@ -40,5 +40,10 @@ await page.addStyleTag({ content: 'iframe{visibility:hidden}' });
 await page.evaluate(() => document.fonts.ready);
 await new Promise((r) => setTimeout(r, 400));
 await page.screenshot({ path: output, type: 'jpeg', quality: 82, clip: { x: 0, y: 0, width: 1200, height: 720 } });
+if (fullOutput) {
+  // teljes oldal egy képen (a levélben a kis képre kattintva ez nyílik meg); a lebegő mobil gomb ne látszódjon
+  await page.addStyleTag({ content: '.fab{display:none!important} header{position:static!important}' });
+  await page.screenshot({ path: fullOutput, type: 'jpeg', quality: 80, fullPage: true });
+}
 await browser.close();
 console.log('Kész:', output);
