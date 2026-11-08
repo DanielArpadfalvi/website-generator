@@ -11,7 +11,7 @@ Cég: **Redpunk Studio Kft.**, aláíró: **Árpádfalvi Dániel, ügyvezető**,
 | Adatbázis | Supabase projekt `audience-first-pipeline` (id: `wuuhponfyvhjyvitbllw`), séma: `leadgen` (táblák: `leads`, `outreach`, `activities`, `opt_outs`, `runs`, `search_log`) – Supabase MCP `execute_sql` |
 | Domain-ellenőrzés | Edge function `leadgen-domain-check` – SQL-ből hívható `pg_net`-tel (lásd lent) |
 | Demo oldalak | Ez a repó (`DanielArpadfalvi/website-generator`), `main` branch, mappánként egy ügyfél: `/<slug>/index.html` → `https://danielarpadfalvi.github.io/website-generator/<slug>/` |
-| Email | Gmail MCP `create_draft` – **csak piszkozat**, csatolmány nélkül. A feladó a Gmailben alapértelmezettként beállított „Küldés másként” cím: `daniel.arpadfalvi@redpunk.hu` |
+| Email | Gmail MCP `create_draft` – **csak piszkozat**, egyetlen beágyazott előnézeti képpel. A feladó a Gmailben alapértelmezettként beállított „Küldés másként” cím: `daniel.arpadfalvi@redpunk.hu` |
 | Sablonok | `pipeline/email-template.html`, referencia demo: `tokaji-nagy-anna/index.html` |
 | Séma | `crm/db/schema.sql` |
 
@@ -45,7 +45,7 @@ Cég: **Redpunk Studio Kft.**, aláíró: **Árpádfalvi Dániel, ügyvezető**,
 - `score_activity` (opcionális, max 10): friss vélemény vagy aktív közösségi oldal (az elmúlt 30 napban)
 
 ### 5. Kiválasztás
-- A **5 legmagasabb `score_total`-ú `qualified` lead**, akinek az emailje nincs az `opt_outs`-ban. Előnyben részesítendő, akinek van emailje, és a Kft. / Bt. (jogi kockázat: természetes személynek, például egyéni vállalkozónak reklám-email csak hozzájárulással küldhető; ezt Dani dönti el kiküldéskor, de a piszkozatban jelezd a CRM `notes` mezőjében: „egyéni vállalkozó – kiküldés előtt mérlegelni”).
+- A **5 legmagasabb `score_total`-ú `qualified` lead, akinek VAN email-címe**, és az nincs az `opt_outs`-ban. Akinek nincs emailje, az is kaphat demót (max. +3/nap), de neki nem készül piszkozat: `status='demo_built'`, `followup_note='Email hiányzik – telefonon / Facebookon megkeresni'`, `next_followup_at` = holnap 9:00. Így a CRM utókövetés listáján megjelenik. Előnyben részesítendő, akinek van emailje, és a Kft. / Bt. (jogi kockázat: természetes személynek, például egyéni vállalkozónak reklám-email csak hozzájárulással küldhető; ezt Dani dönti el kiküldéskor, de a piszkozatban jelezd a CRM `notes` mezőjében: „egyéni vállalkozó – kiküldés előtt mérlegelni”).
 
 ### 6. Demo oldal (mindegyik kiválasztottnak)
 - Slug: ékezet nélküli, kötőjeles név (pl. `tokaji-nagy-anna`). Fájl: `/<slug>/index.html`, önálló HTML (inline CSS, Google Fonts megengedett).
@@ -56,7 +56,7 @@ Cég: **Redpunk Studio Kft.**, aláíró: **Árpádfalvi Dániel, ügyvezető**,
 - **Fotót ne másolj** tőlük vagy máshonnan. Helyőrző (gradient vagy monogram) legyen, a láblécben: „a végleges oldalon saját fotók szerepelnének”.
 - Design: a referencia (`tokaji-nagy-anna`) struktúráját követheted, de a **színvilág, a betűtípus és a hangulat a szakmához illeszkedjen** (pl. villanyszerelő: hideg, megbízható kék vagy sárga; kutyakozmetika: játékos, meleg). A szöveg magyar, tegező vagy magázó a szakmához illően.
 - Ellenőrzés: headless Chrome-mal képernyőkép asztali (1280) és mobil (390) nézetben. Legyen olvasható, ne lógjon ki semmi.
-- **Előnézeti kép az emailbe:** `cd pipeline/tools && npm install` (első alkalommal), majd `node preview.mjs ../../<slug>/index.html ../../<slug>/preview.jpg`. A kép az oldal első képernyője (1200×720), és a demóval együtt kerül fel: `{{DEMO_URL}}preview.jpg`. Nézd meg a képet, mielőtt pusholod.
+- **Előnézeti kép az emailbe:** `cd pipeline/tools && npm install` (első alkalommal), majd `node preview.mjs ../../<slug>/index.html ../../<slug>/preview.jpg`. A kép az oldal első képernyője (1200×720). Nézd meg, mielőtt felhasználod. A levélbe **beágyazott mellékletként** kerül (lásd 8. lépés), mert a Gmail-csatoló a külső képhivatkozásokat kiszedi.
 - `git add`, `git commit` („Demo: <név>”), `git push origin main`. Pár perc múlva `WebFetch`-csel ellenőrizd, hogy él-e az URL.
 
 ### 7. Domain-ellenőrzés (3 szabad .hu domain ügyfelenként)
@@ -73,7 +73,9 @@ Az anon kulcs: Supabase MCP `get_publishable_keys` (legacy anon). Rövid, könny
 
 ### 8. Gmail-piszkozat
 - Sablon: `pipeline/email-template.html`. Minden helyőrzőt tölts ki. A dicséret konkrét és őszinte legyen, a valós értékelésekből.
-- `create_draft`: `to` = a lead emailje (ha nincs, hagyd üresen, és a CRM-ben jelöld), `subject` = „Demo weboldal a(z) <Név> részére”, `htmlBody` és egy egyszerű szöveges `body`. **Csatolmány nélkül.**
+- `create_draft`: `to` = a lead emailje, `subject` = „Demo weboldal a(z) <Név> részére”, `htmlBody` és egy egyszerű szöveges `body`, valamint **egyetlen beágyazott kép**:
+  `attachments: [{"content": "sha256:<sha256sum>:<abszolút út>/<slug>/preview.jpg", "filename": "demo-elonezet.jpg", "mimeType": "image/jpeg", "inline": true}]`. A HTML-ben `<img src="cid:att0">` hivatkozik rá. Ez csak akkor működik, ha van `to` címzett.
+- **Formázási csapdák (a Gmail-csatoló kiszedi):** külső `<img src="http…">`, illetve a `background:` rövidített CSS. Helyette `background-color:` és táblázatcella `bgcolor` (a sablon már így készült).
 
 ### 9. Adatbázis frissítése
 ```sql
@@ -87,7 +89,7 @@ insert into leadgen.runs (leads_found, leads_new, drafted, log) values (..., ...
 A futás végén írj egy rövid összefoglalót: hány új lead jött, hány lett kizárva (és miért), kik kaptak demót és piszkozatot (linkekkel), és kinél hiányzik az email.
 
 ## Szabályok
-- Soha ne küldj emailt, csak piszkozatot írj. Napi legfeljebb 5 piszkozat.
+- Soha ne küldj emailt, csak piszkozatot írj. Napi legfeljebb 5 piszkozat, és csak olyan leadnek, akinek van email-címe.
 - Egy vállalkozást csak egyszer keress meg: ha már van `outreach` sora, kihagyandó.
 - Az `opt_outs` tiltólista mindent felülír.
 - Ne találj ki adatot. Ha valami nem derül ki, hagyd üresen.
