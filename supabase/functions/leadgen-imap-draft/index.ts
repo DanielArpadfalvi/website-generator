@@ -114,10 +114,9 @@ async function draftsFolder(imap: Imap): Promise<{ folder: string; all: string[]
 
 Deno.serve(async (req) => {
   if (req.method !== "POST") return json({ error: "POST kell" }, 405);
-  // hozzáférés: a leadgen.config táblában tárolt token (csak service role olvassa)
-  const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, { db: { schema: "leadgen" } });
-  const { data: cfg } = await sb.from("config").select("value").eq("key", "fn_token").maybeSingle();
-  if (!cfg?.value || req.headers.get("x-leadgen-token") !== cfg.value) return json({ error: "Nincs jogosultság" }, 401);
+  const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
+  const { data: okToken } = await sb.rpc("leadgen_check_token", { t: req.headers.get("x-leadgen-token") ?? "" });
+  if (okToken !== true) return json({ error: "Nincs jogosultság" }, 401);
   if (!PASS) return json({ error: "Hiányzik az IMAP_PASS titok (Supabase → Edge Functions → Secrets)" }, 500);
 
   const body = await req.json().catch(() => ({}));
