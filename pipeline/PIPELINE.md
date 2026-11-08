@@ -2,7 +2,7 @@
 
 Ezt a leírást követi a minden reggel 7:00-kor (Europe/Budapest) induló ütemezett feladat. A cél: kis, minőségi, de weboldal nélküli szegedi vállalkozások felkutatása, pontozása, és a legjobb 5-nek demo oldal, valamint **Gmail-piszkozat** készítése. **Emailt soha nem küldünk ki automatikusan, csak piszkozatot írunk.** A kiküldést Dani végzi kézzel, és a CRM-ben jelöli.
 
-Cég: **Redpunk Studio Kft.**, aláíró: **Árpádfalvi Dániel, ügyvezető**, arpadfalvi93@gmail.com
+Cég: **Redpunk Studio Kft.**, aláíró: **Árpádfalvi Dániel, ügyvezető**, daniel.arpadfalvi@redpunk.hu
 
 ## Erőforrások
 
@@ -11,7 +11,7 @@ Cég: **Redpunk Studio Kft.**, aláíró: **Árpádfalvi Dániel, ügyvezető**,
 | Adatbázis | Supabase projekt `audience-first-pipeline` (id: `wuuhponfyvhjyvitbllw`), séma: `leadgen` (táblák: `leads`, `outreach`, `activities`, `opt_outs`, `runs`, `search_log`) – Supabase MCP `execute_sql` |
 | Domain-ellenőrzés | Edge function `leadgen-domain-check` – SQL-ből hívható `pg_net`-tel (lásd lent) |
 | Demo oldalak | Ez a repó (`DanielArpadfalvi/website-generator`), `main` branch, mappánként egy ügyfél: `/<slug>/index.html` → `https://danielarpadfalvi.github.io/website-generator/<slug>/` |
-| Email | Gmail MCP `create_draft` – **csak piszkozat**, csatolmány nélkül |
+| Email | Gmail MCP `create_draft` – **csak piszkozat**, csatolmány nélkül. A feladó a Gmailben alapértelmezettként beállított „Küldés másként” cím: `daniel.arpadfalvi@redpunk.hu` |
 | Sablonok | `pipeline/email-template.html`, referencia demo: `tokaji-nagy-anna/index.html` |
 | Séma | `crm/db/schema.sql` |
 
