@@ -56,6 +56,7 @@ Cég: **Redpunk Studio Kft.**, aláíró: **Árpádfalvi Dániel, ügyvezető**,
 - **Fotót ne másolj** tőlük vagy máshonnan. Helyőrző (gradient vagy monogram) legyen, a láblécben: „a végleges oldalon saját fotók szerepelnének”.
 - Design: a referencia (`tokaji-nagy-anna`) struktúráját követheted, de a **színvilág, a betűtípus és a hangulat a szakmához illeszkedjen** (pl. villanyszerelő: hideg, megbízható kék vagy sárga; kutyakozmetika: játékos, meleg). A szöveg magyar, tegező vagy magázó a szakmához illően.
 - Ellenőrzés: headless Chrome-mal képernyőkép asztali (1280) és mobil (390) nézetben. Legyen olvasható, ne lógjon ki semmi.
+- **Előnézeti kép az emailbe:** `cd pipeline/tools && npm install` (első alkalommal), majd `node preview.mjs ../../<slug>/index.html ../../<slug>/preview.jpg`. A kép az oldal első képernyője (1200×720), és a demóval együtt kerül fel: `{{DEMO_URL}}preview.jpg`. Nézd meg a képet, mielőtt pusholod.
 - `git add`, `git commit` („Demo: <név>”), `git push origin main`. Pár perc múlva `WebFetch`-csel ellenőrizd, hogy él-e az URL.
 
 ### 7. Domain-ellenőrzés (3 szabad .hu domain ügyfelenként)

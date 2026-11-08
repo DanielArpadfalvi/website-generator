@@ -1,0 +1,10 @@
+{
+  "name": "demo-preview",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.1.0",
+    "@fontsource/inter": "^5.1.0",
+    "puppeteer-core": "^23.10.0"
+  }
+}
