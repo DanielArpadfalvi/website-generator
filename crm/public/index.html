@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outreach CRM</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23a8735d%22/><text x=%2250%22 y=%2266%22 font-size=%2248%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Georgia%22>C</text></svg>">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<aside class="side">
+  <div class="brand">Outreach <span>CRM</span></div>
+  <nav>
+    <button data-view="dashboard" class="active">Áttekintés</button>
+    <button data-view="pipeline">Pipeline</button>
+    <button data-view="list">Ügyfelek</button>
+    <button data-view="followups">Utókövetés <span id="badge-follow" class="badge" hidden></span></button>
+  </nav>
+  <button class="btn primary full" id="btn-new">+ Új ügyfél</button>
+  <div class="side-foot" id="conn">Kapcsolódás…</div>
+</aside>
+
+<main id="main">
+  <section id="view-dashboard" class="view"></section>
+  <section id="view-pipeline" class="view" hidden></section>
+  <section id="view-list" class="view" hidden></section>
+  <section id="view-followups" class="view" hidden></section>
+</main>
+
+<div id="drawer-backdrop" hidden></div>
+<aside id="drawer" hidden></aside>
+
+<dialog id="dlg-new">
+  <form method="dialog" id="form-new">
+    <h3>Új ügyfél</h3>
+    <label>Név *<input name="business_name" required></label>
+    <label>Kategória<input name="category" placeholder="pl. hair_salon"></label>
+    <label>Cím<input name="address"></label>
+    <div class="row2">
+      <label>Telefon<input name="phone"></label>
+      <label>Email<input name="email" type="email"></label>
+    </div>
+    <label>Megjegyzés<textarea name="notes" rows="3"></textarea></label>
+    <div class="dlg-actions">
+      <button value="cancel" class="btn" formnovalidate>Mégse</button>
+      <button value="ok" class="btn primary">Mentés</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" hidden></div>
+<script src="/app.js" type="module"></script>
+</body>
+</html>
